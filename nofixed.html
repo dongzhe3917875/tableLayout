@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>noFixed</title>
+	<style type="text/css">
+		td {
+		  border: 1px solid black;
+		}
+		table {
+		  margin: 15px 0;
+		  border: 1px solid black;
+		}
+		html {
+		  background: #ccc;
+		}
+		body {
+		  max-width: 400px;
+		  margin: 0 auto;
+		  background: white;
+		  padding: 10px;
+		}
+		.instruction {
+			border: 1px dotted #000;
+			padding: 10px;
+		}
+		.respect td:nth-child(1) {
+			width: 50%;
+		}
+		.thousand td {
+			width: 1000px;
+		}
+
+		.calc td:nth-child(1) {
+		  width: 2000px;
+		}
+		.calc td:nth-child(2) {
+		  width: 1000px;
+		}
+
+		.image td {
+		  overflow: hidden;
+		}
+
+		.whitespace td {
+		  white-space: nowrap;
+		}
+	</style>
+</head>
+<body>
+	<h1>默认table-layout为auto的情况</h1>
+	<p>在这里设置了body最大宽度为400px	，table也没设置宽度</p>
+	<div>
+		<h3>第一个例子，设置比较短的td， 前短后长</h3>
+		<table>
+			<tr>
+				<td>我比较短小</td>
+				<td>我好像也比较短小</td>
+			</tr>
+		</table>
+		<p class='instruction'>
+			可以看出在没有到达最大宽度的时候，都是比较free的,该多长就多长，因为发挥的空间比较大
+		</p>
+	</div>
+
+	<div>
+		<h3>第二个例子，设置比较短的td，前长后短</h3>
+		<table>
+			<tr>
+				<td>我好像也比较短小</td>
+				<td>我比较短小</td>
+			</tr>
+		</table>
+		<p class='instruction'>
+			还是很free
+		</p>
+	</div>
+	
+	<div>
+		<h3>第三个例子，有个比较长的td，table超出了max-width怎么办</h3>
+		<table>
+			<tr>
+				<td>我很长的我很长的我很长的我很长的我很长的，我很长的我很长的我很长的我很长的我很长的</td>
+				<td>我比较短小</td>
+			</tr>
+		</table>
+		<p class='instruction'>
+			鬼才知道第一列的长度在哪里换行呢
+		</p>
+	</div>
+
+	<div>
+		<h3>第四个例子，反过来试试</h3>
+		<table>
+			<tr>
+				<td>我比较短小</td>
+				<td>我很长的我很长的我很长的我很长的我很长的，我很长的我很长的我很长的我很长的我很长的，再长一点</td>
+			</tr>
+		</table>
+		<p class='instruction'>
+			反过来了，可以看出是加载完后动态计算的，因为刚开始是不知道折行宽度的
+		</p>
+	</div>
+
+	<div>
+		<h3>第五个例子，来吧 混合起来看看</h3>
+		<table>
+			<tr>
+				<td>我很长的我很长的我很长的我很长的我很长的，我很长的我很长的我很长的我很长的我很长的</td>
+				<td>我比较短小</td>
+			</tr>
+			<tr>
+				<td>我比较短小</td>
+				<td>我很长的我很长的我很长的我很长的我很长的，我很长的我很长的我很长的我很长的我很长的，再长一点</td>
+			</tr>
+		</table>
+		<p class='instruction'>
+			果然是个打五十大板了，50%有木有，完全不知道套路有木有，到底是怎么计算的
+		</p>
+	</div>
+
+	<div>
+		<h3>第六个例子，短小的没有大哥撑腰就一定受欺侮吗，不!我可以改规则</h3>
+		<table class='respect'>
+			<tr>
+				<td>我比较短小</td>
+				<td>我很长的我很长的我很长的我很长的我很长的，我很长的我很长的我很长的我很长的我很长的，再长一点</td>
+			</tr>
+		</table>
+		<p class='instruction'>
+			短小的改了规则占据了多余的空地，略微浪费啊，的确有些蛋疼
+		</p>
+	</div>
+
+	<div>
+		<h3>第七个例子，我就想让td宽一点，也就银河系那么宽吧</h3>
+		<table class='thousand'>
+			<tr>
+				<td>我比较短小，但是我设的宽度很宽</td>
+				<td>同上</td>
+			</tr>
+		</table>
+		<p class='instruction'>
+			都设置了宽度1000px，设置了也没有什么卵用，不会超过边界的，不过强行55开而已
+		</p>
+	</div>
+
+	<div>
+		<h3>第八个例子，探求55开的秘密，超过宽度就一定55开吗</h3>
+		<table class='calc'>
+			<tr>
+				<td>我比较短小，但是我设的宽度很宽</td>
+				<td>同上</td>
+			</tr>
+		</table>
+		<p class='instruction'>
+			第一个td设置了2000px，第二个td设置了1000px，发现你妹的这还是按比例的，不让超出还要啥自行车
+		</p>
+	</div>
+
+	<div>
+		<h3>第九个例子，我就是想越过边界，看看外面的世界</h3>
+		<table class='image'>
+			<tr>
+				<td>我比较短小，我累了不设宽度了</td>
+				<td><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/dock-slice-2.png" />图片虽然宽，但我可以设置overflow啊</td>
+			</tr>
+		</table>
+		<p class='instruction'>
+			终于冲出了边界，才发现漆黑一片，一无所有，说好的overflow为什么不起作用
+		</p>
+	</div>
+
+	<div>
+		<h3>第十个例子，看见上面的表演，我觉得不折行，我也可以冲出边界</h3>
+		<table class='whitespace'>
+			<tr>
+				<td>我比较短小</td>
+				<td>我不想折行， 我不想折行我不想折行我不想折行我不想折行我不想折行我不想折行我不想折行</td>
+			</tr>
+		</table>
+		<p class='instruction'>
+			强行装逼，结果出去了吧 哈哈哈
+		</p>
+	</div>
+
+	<div>
+		<h3>第十一个例子，我想放一个格式化的代码，估计也是悲剧吧 它可不会随便换行的</h3>
+		<table class="code">
+		  <tr>
+		    <td>Which is an issue for preformatted text, like code.</td>
+		    <td><pre>
+		body.logged-in article > h2 {
+		  background: linear-gradient(rgba(0, 0, 0, 0), rgba(255, 0, 0, 0.2));      
+		}
+		    </pre></td>
+		  </tr>
+		</table>
+		<p class='instruction'>
+			你说的对啊
+		</p>
+	</div>
+	<h2>大大的PS</h2>
+	<p class='instruction'>
+		对了，这些超出的，我都没有设置宽度，都不知道它的宽度是怎样分配的，谜一样的宽度分配，唉
+	</p>
+	<p style='color:red'>那就让table-layout:fixed来拯救你吧</p>
+</body>
+</html>
