@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>table-layout: fixed</title>
+	<style type="text/css">
+		td {
+		  border: 1px solid black;
+		}
+		table {
+		  margin: 15px 0;
+		  border: 1px solid black;
+		  width: 100%;
+		}
+		html {
+		  background: #ccc;
+		}
+		body {
+		  max-width: 600px;
+		  margin: 0 auto;
+		  background: white;
+		  padding: 10px;
+		}
+		.instruction {
+			border: 1px dotted #000;
+			padding: 10px;
+		}
+		.table-fixed {
+			table-layout: fixed;
+		}
+		.table-percent td:nth-child(1), .table-percent td:nth-child(3) {
+			width: 25%;
+		}
+		.table-percent td:nth-child(2) {
+			width: 50%;
+		}
+		.word-break {
+			white-space: nowrap;
+		}
+		.wider td:nth-child(1) {
+			width: 200px;
+		}
+		.wider td:nth-child(2) {
+			width: 600px;
+		}
+		
+		.wider-some td:nth-child(1) {
+			width: 200px;
+		}
+		
+		.no-wider td:nth-child(1) {
+			width: 10px;
+		}
+		.no-wider td:nth-child(2) {
+			width: 30px;
+		}
+
+		.cut-off th:nth-child(1) {
+		  width: 75%;
+		}
+		.cut-off td:nth-child(1) {
+		  overflow: hidden;
+		  white-space: nowrap;
+		  text-overflow: ellipsis;
+		}
+		.cut-off th:nth-child(2) {
+		  width: 25%;
+		}
+		.cut-off td:nth-child(2) span {
+		  display: block;
+		}
+
+		.cut-off-width th:nth-child(1), .cut-off-width th:nth-child(2) {
+		  width: 250px
+		}
+
+		.cut-off-width td:nth-child(1), .cut-off-width td:nth-child(2) {
+		  overflow: hidden;
+		  white-space: nowrap;
+		  text-overflow: ellipsis;
+		}
+		
+		.cut-off-mix th:nth-child(1) {
+			width: 40%; 
+		}
+		.cut-off-mix th:nth-child(2) {
+			width: 250px;
+		}
+		.cut-off-mix td:nth-child(1), .cut-off-mix td:nth-child(2) {
+		  overflow: hidden;
+		  white-space: nowrap;
+		  text-overflow: ellipsis;
+		}
+		
+		.hide td{
+			overflow: hidden;
+		}
+
+		.scroll-code td {
+			overflow: auto;
+		}
+	</style>
+</head>
+<body>
+	<p class='instruction'>来看原文怎么说的<br>
+	The layout is fixed based on the first row. Set the width of those, and the rest of the table follows.<br/>
+	翻译一下就是fixed指的是基于第一行来固定下来宽度，后面的行数渲染的行为是跟随第一行的，也就是这个固定指的是表格的渲染行为的列宽是固定的
+	</p>
+	<p class='instruction'>
+		当只有table-layout:fixed属性的时候，列是自动平均分配的，要是没有fixed属性，是默认的auto的话，列款的分布就比较诡异了,在使用table-layout:fixed的时候，一定要讲table的宽度设成100%
+	</p>
+
+	<div>
+		<h3>第一个例子，默认fixed，可以使用toggle切换按钮切换到auto的情况</h3>
+		<table class='table-fixed'>
+			<tr>
+			    <td>1</td>
+			    <td>2</td>
+			    <td>3</td>
+			    <td>4</td>
+			    <td>5</td>
+			</tr>
+			<tr>
+			    <td>我在测试我在测试我在测试我在测试我在测试我在测试我在测试我在测试我在测试</td>
+			    <td>122222222222222</td>
+			    <td>3</td>
+			    <td>4</td>
+			    <td>5</td>
+			</tr>
+			<tr>
+			    <td>1</td>
+			    <td>2</td>
+			    <td>3</td>
+			    <td>4</td>
+			    <td>5</td>
+			</tr>
+			<tr>
+			    <td>1</td>
+			    <td>2</td>
+			    <td>3</td>
+			    <td>4</td>
+			    <td>5</td>
+			</tr>
+		</table>
+		<button class='toggle'>toggle</button>
+		<span></span>
+		<p class='instruction'>
+			toggle一下可以看出,fixed默认就是平均分配，auto就是乱分配，收到后面行的影响很大，有一列单元格溢出了是因为折行策略的问题
+		</p>
+	</div>
+
+	<div>
+		<h3>第二个例子，手动设置百分比的情况</h3>
+		<table class='table-fixed table-percent'>
+			<tr>
+			    <td>100-4😯3</td>
+			    <td>2啊大沙发</td>
+			    <td>3啊实打实的</td>
+			</tr>
+			<tr>
+			    <td>我在测试我在测试我在测试我在测试我在测试我在测试我在测试我在测试我在测试</td>
+			    <td>122222222222222</td>
+			    <td>3</td>
+			</tr>
+		</table>
+		<button class='toggle'>toggle</button>
+		<span></span>
+		<p class='instruction'>
+			toggle一下可以看出,第一列和第三列是25%，中间是50%，好像这两种行为是一致的
+		</p>
+	</div>
+
+	<div>
+		<h3>第三个例子，table不允许折行，其他无设置</h3>
+		<table class='table-fixed word-break'>
+			<tr>
+			    <td>122222222222222</td>
+			    <td>我在测试我在测试我在测试我在测试我在测试我在测试我在测试我在测试我在测试</td>
+			</tr>
+		</table>
+		<button class='toggle'>toggle</button>
+		<span></span>
+		<p class='instruction'>
+			toggle一下可以看出,不允许折行，大家都有点小任性，fixed的情况，还是平均分配，单元格不会跃出边界，但是文字会溢出，auto的情况下，还是不会平均分配，单元格会溢出边界，文字不会溢出单元格，但是整体溢出，文字溢出解决方案，text-overflow我不会告诉你
+		</p>
+	</div>
+
+	<div>
+		<h3>第四个例子，定宽厉害还是100%厉害 （每列都设置宽度且溢出）</h3>
+		<table class='table-fixed wider'>
+			<tr>
+			    <td>Well, unless YOU force it wider byWell, unless YOU force it wider byWell, unless YOU force it wider by</td>
+			    <td>setting the cells wider (combined) than the table is wide.setting the cells wider (combined) than the table is wide.</td>
+			</tr>
+		</table>
+		<button class='toggle'>toggle</button>
+		<span></span>
+		<p class='instruction'>
+			toggle一下可以看出,列宽都设成了400px，果然还是各领风骚啊，在fixed的情况下，单元格会越过边界，定宽取得胜利，在auto的情况下，单元格却老实了，被迫压缩到100%的宽度（但还是保持着宽度比例），可以看出在fixed的情况下，不要给每列都设置宽度。
+		</p>
+	</div>
+
+	<div>
+		<h3>第五个例子，定宽厉害还是100%厉害 （设置局部列）</h3>
+		<table class='table-fixed wider-some'>
+			<tr>
+			    <td>Well, unless YOU force it wider byWell, unless YOU force it wider byWell, unless YOU force it wider by</td>
+			    <td>setting the cells wider (combined) than the table is wide.setting the cells wider (combined) than the table is wide.</td>
+			    <td>testtesttesttesttestt， esttestteststtesttest</td>
+			</tr>
+		</table>
+		<button class='toggle'>toggle</button>
+		<span></span>
+		<p class='instruction'>
+			toggle一下可以看出,设置局部列后，一切都正常了，局部列会定宽，剩下的自动分配，为了看出效果，增加了一列，可以看出，fixed剩下的列可以平均分配，auto剩下的依然是怪异模式
+		</p>
+	</div>
+
+	<div>
+		<h3>第六个例子，定宽厉害还是100%厉害 （每列都设置宽度且不溢出）</h3>
+		<table class='table-fixed no-wider'>
+			<tr>
+			    <td>Well, unless YOU force it wider byWell, unless YOU force it wider byWell, unless YOU force it wider by</td>
+			    <td>setting the cells wider (combined) than the table is wide.setting the cells wider (combined) than the table is wide.</td>
+			</tr>
+		</table>
+		<button class='toggle'>toggle</button>
+		<span></span>
+		<p class='instruction'>
+			toggle一下可以看出,在fixed的情况下，大致还是按照比例来的，auto又是怪异模式
+		</p>
+	</div>
+
+	<div>
+		<h3>第七个例子，单行显示文字溢出问题，宽度百分比，可以自适应，多行显示display设置</h3>
+		<table class="table-fixed cut-off">
+		  <thead>
+		  <tr>
+		    <th>需要单行且作文字溢出的</th>
+		    <th>用于用户生成的数据，多行显示</th>
+		  </tr>
+		  </thead>
+		  <tr>
+		    <td>Supercalifragilisticexpialidocious Something something something something attrotious</td>
+		    <td>132289数据我的娃的委屈委屈的</td>
+		  </tr>
+		  <tr>
+		    <td>This little piggy went to market. This little piggy went to bed.</td>
+		    <td>1</td>
+		  </tr>
+		  <tr>
+		    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis amet molestiae earum accusantium nostrum eveniet ipsum soluta ut reprehenderit vel incidunt laboriosam dolorum maiores! Earum deserunt sit unde? Sunt voluptatem!</td>
+		    <td>1</td>
+		  </tr>
+		</table>
+		<button class='toggle'>toggle</button>
+		<span></span>
+		<p class='instruction'>
+			toggle一下可以看出,在fixed的情况下，大致还是按照比例来的，auto又是怪异模式
+		</p>
+	</div>
+
+	<div>
+		<h3>第八个例子，单行显示文字溢出问题，宽度定宽，可以自适应，多行显示display设置</h3>
+		<table class="table-fixed cut-off-width">
+		  <thead>
+		  <tr>
+		    <th>需要单行且作文字溢出的</th>
+		    <th>需要单行且作文字溢出的</th>
+		    <th>用于用户生成的数据，多行显示</th>
+		  </tr>
+		  </thead>
+		  <tr>
+		    <td>Supercalifragilisticexpialidocious Something something something something attrotious</td>
+		    <td>132289数据我的娃的委屈委屈的132289数据我的娃的委屈委屈的</td>
+		    <td>132289数据我的娃的委屈委屈的</td>
+		  </tr>
+		  <tr>
+		    <td>This little piggy went to market. This little piggy went to bed.</td>
+		    <td>132289数据我的娃的委屈委屈的</td>
+		    <td>1</td>
+		  </tr>
+		  <tr>
+		    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis amet molestiae earum accusantium nostrum eveniet ipsum soluta ut reprehenderit vel incidunt laboriosam dolorum maiores! Earum deserunt sit unde? Sunt voluptatem!</td>
+		    <td>132289数据我的娃的委屈委屈的</td>
+		    <td>1</td>
+		  </tr>
+		</table>
+		<button class='toggle'>toggle</button>
+		<span></span>
+		<p class='instruction'>
+			toggle一下可以看出,在fixed的情况下，把宽度设置死了，就悲剧了，不能实现屏幕自适应
+		</p>
+	</div>
+
+	<div>
+		<h3>第九个例子，混合一下试试 既有百分比 又有宽度定</h3>
+		<table class="table-fixed cut-off-mix">
+		  <thead>
+		  <tr>
+		    <th>需要单行且作文字溢出的</th>
+		    <th>需要单行且作文字溢出的</th>
+		    <th>用于用户生成的数据，多行显示</th>
+		  </tr>
+		  </thead>
+		  <tr>
+		    <td>Supercalifragilisticexpialidocious Something something something something attrotious</td>
+		    <td>132289数据我的娃的委屈委屈的132289数据我的娃的委屈委屈的</td>
+		    <td>132289数据我的娃的委屈委屈的</td>
+		  </tr>
+		  <tr>
+		    <td>This little piggy went to market. This little piggy went to bed.</td>
+		    <td>132289数据我的娃的委屈委屈的</td>
+		    <td>1</td>
+		  </tr>
+		  <tr>
+		    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis amet molestiae earum accusantium nostrum eveniet ipsum soluta ut reprehenderit vel incidunt laboriosam dolorum maiores! Earum deserunt sit unde? Sunt voluptatem!</td>
+		    <td>132289数据我的娃的委屈委屈的</td>
+		    <td>1</td>
+		  </tr>
+		</table>
+		<button class='toggle'>toggle</button>
+		<span></span>
+		<p class='instruction'>
+			通过对比发现 fixed是如此的完美 no problem 完美的自适应
+		</p>
+	</div>
+
+	<div>
+		<h3>第十个例子，overflow：hidden的表现</h3>
+		<table class="table-fixed hide">
+		  <tr>
+		    <td class="img-1">Overflow can be hidden.</td>
+		    <td class="img-2">
+		    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/dock-slice-2.png" />
+		    </td>
+		  </tr>
+		</table>
+		<button class='toggle'>toggle</button>
+		<span></span>
+		<p class='instruction'>
+			no problem 完美的自适应
+		</p>
+	</div>
+
+	<div>
+		<h3>第十一个例子，混合一下试试 既有百分比 又有宽度定</h3>
+		<table class="table-fixed scroll-code">
+		  <tr>
+		    <td>Overflow can scroll. Except in Firefox.</td>
+		    <td><pre>
+		body.logged-in article > h2 {
+		  background: linear-gradient(rgba(0, 0, 0, 0), rgba(255, 0, 0, 0.2));      
+		}
+		    </pre></td>
+		  </tr>
+		</table>
+		<button class='toggle'>toggle</button>
+		<span></span>
+		<p class='instruction'>
+			通过对比发现 fixed是如此的完美 no problem 完美的自适应
+		</p>
+	</div>
+</body>
+<script type="text/javascript">
+	var toggles = document.querySelectorAll('.toggle')
+	for (var i = 0, length = toggles.length; i < length; i++) {
+		toggles[i].onclick = (function(j){
+			return function(event) {
+				var table = event.target.parentNode.querySelector('table')
+				table.classList.toggle('table-fixed')
+				event.target.nextElementSibling.innerHTML = table.classList.contains('table-fixed') ? 'fixed' : 'auto'
+			}
+		})(i)
+	}
+</script>
+</html>
