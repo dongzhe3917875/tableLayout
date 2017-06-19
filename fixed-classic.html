@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ficed-classic</title>
+	<link rel="stylesheet" href="common.css">
+	<style>
+		.users td {
+		  white-space: nowrap;
+		  overflow: hidden;
+		  text-overflow: ellipsis;
+		}
+
+		/* Column widths are based on these cells */
+		.row-ID {
+		  width: 10%;
+		}
+		.row-name {
+		  width: 40%;
+		}
+		.row-job {
+		  width: 30%;
+		}
+		.row-email {
+		  width: 20%;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<h3>第一个例子，默认fixed，可以使用toggle切换按钮切换到auto的情况</h3>
+		<table class="users table-fixed">
+		  <thead>
+		    <tr>
+		      <th class="row-1 row-ID">ID</th>
+		      <th class="row-2 row-name">Name</th>
+		      <th class="row-3 row-job">Job</th>
+		      <th class="row-4 row-email">Email<th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr>
+		      <td>0001</td>
+		      <td>Johnny Five</td>
+		      <td>Robotin'</td>
+		      <td>need@input.com</td>
+		    </tr>
+		    <tr>
+		      <td>0002</td>
+		      <td>Super Superlonglastnamesmithlonger</td>
+		      <td>Doin' stuff longer</td>
+		      <td>doing@stuff.com longer</td>
+		    </tr>
+		  </tbody>
+		</table>
+		<button class='toggle'>toggle</button>
+		<span></span>
+		<p class='instruction'>经典的问题是一种经典的解决方案
+		1.table不会被无缘无辜的撑大， 100%就是100%，他就在那里
+		2.列比例是有效的，不论何时，比例都是有效的
+		3.设置的overflow：hidden也是正常的，当总体长度变大时，有的hidden会消失
+		</p>
+		<button class='animate'>查看动画</button>
+	</div>
+</body>
+<script src="common.js"></script>
+<script type="text/javascript">
+  // getBoundingClientRect
+  // https://developer.mozilla.org/zh-CN/docs/Web/API/Element/getBoundingClientRect
+	var animate = document.querySelector('.animate')
+	var orientation = positive
+	var max = 
+	animate.addEventListener('click', function() {
+		var maxWidth = window.getComputedStyle(document.body)['max-width']
+
+	}, false)
+</script>
+</html>
