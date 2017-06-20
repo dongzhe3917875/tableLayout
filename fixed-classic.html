@@ -68,11 +68,15 @@
   // getBoundingClientRect
   // https://developer.mozilla.org/zh-CN/docs/Web/API/Element/getBoundingClientRect
 	var animate = document.querySelector('.animate')
-	var orientation = positive
+	var orientation = 'positive'
 	var max = 
 	animate.addEventListener('click', function() {
+		// https://developer.mozilla.org/zh-CN/docs/Web/API/Window/getComputedStyle
+		// getPropertyValue
 		var maxWidth = window.getComputedStyle(document.body)['max-width']
+		if (orientation == 'positive') {
 
+		}
 	}, false)
 </script>
 </html>
