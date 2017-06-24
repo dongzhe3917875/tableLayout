@@ -24,6 +24,11 @@
 		.row-email {
 		  width: 20%;
 		}
+		.animate {
+			position: fixed;
+			top: 30px;
+			left: 30px;
+		}
 	</style>
 </head>
 <body>
@@ -60,8 +65,8 @@
 		2.列比例是有效的，不论何时，比例都是有效的
 		3.设置的overflow：hidden也是正常的，当总体长度变大时，有的hidden会消失
 		</p>
-		<button class='animate'>查看动画</button>
 	</div>
+	<button class='animate'>查看动画</button>
 </body>
 <script src="common.js"></script>
 <script type="text/javascript">
@@ -69,13 +74,48 @@
   // https://developer.mozilla.org/zh-CN/docs/Web/API/Element/getBoundingClientRect
 	var animate = document.querySelector('.animate')
 	var orientation = 'positive'
-	var max = 
+	var inAnimating = false
+	var ifstart = true
+	var timeID = null
+	var startAnimate = function(maxWidth, max) {
+		var currentWidth = maxWidth
+		return function() {
+			if (orientation == 'positive') {
+				currentWidth = currentWidth + 10
+				if (currentWidth >= max) {
+					orientation = 'negative'
+				}
+			} else if (orientation == 'negative') {
+				currentWidth = currentWidth - 10
+				if (currentWidth <= 600) {
+					console.log('outout')
+					orientation = 'positive'
+				}	
+			}
+			// console.log(currentWidth, max)
+			document.body.style.maxWidth = currentWidth + 'px'
+			timeID = requestAnimationFrame(arguments.callee)
+		}
+	}
 	animate.addEventListener('click', function() {
+		// http://www.cnblogs.com/polk6/p/5051935.html 屏幕的高度宽度
+		// var max = document.body.offsetWidth
+		var max = window.outerWidth
 		// https://developer.mozilla.org/zh-CN/docs/Web/API/Window/getComputedStyle
 		// getPropertyValue
-		var maxWidth = window.getComputedStyle(document.body)['max-width']
-		if (orientation == 'positive') {
-
+		var maxWidth = parseInt(window.getComputedStyle(document.body)['max-width'])
+		var func = startAnimate(maxWidth, max)
+		if (!inAnimating && ifstart) {
+			timeID = requestAnimationFrame(func)
+			animate.innerText = '停止动画'
+			inAnimating = true
+			ifstart = false
+		} else {
+			window.cancelAnimationFrame(timeID)
+			timeID = undefined
+			inAnimating = false
+			ifstart = true
+			animate.innerText = '查看动画'
 		}
 	}, false)
 </script>
