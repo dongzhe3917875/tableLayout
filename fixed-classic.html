@@ -47,14 +47,14 @@
 		    <tr>
 		      <td>0001</td>
 		      <td>Johnny Five</td>
-		      <td>Robotin'</td>
+		      <td>Robotin撒打算打算打算打算'</td>
 		      <td>need@input.com</td>
 		    </tr>
 		    <tr>
 		      <td>0002</td>
-		      <td>Super Superlonglastnamesmithlonger</td>
+		      <td>Super Superlonglastnamesmithlonger啊实打实大师大</td>
 		      <td>Doin' stuff longer</td>
-		      <td>doing@stuff.com longer</td>
+		      <td>doing@stuff.com longer撒打算打算打算的</td>
 		    </tr>
 		  </tbody>
 		</table>
@@ -78,6 +78,7 @@
 	var ifstart = true
 	var timeID = null
 	var startAnimate = function(maxWidth, max) {
+		// currentWidth形成了闭包 很好 值能保存下来继续用
 		var currentWidth = maxWidth
 		return function() {
 			if (orientation == 'positive') {
@@ -105,6 +106,7 @@
 		// getPropertyValue
 		var maxWidth = parseInt(window.getComputedStyle(document.body)['max-width'])
 		var func = startAnimate(maxWidth, max)
+		// 判断是否在动画中
 		if (!inAnimating && ifstart) {
 			timeID = requestAnimationFrame(func)
 			animate.innerText = '停止动画'
