@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>simplest responsive css grid</title>
+	<style type="text/css">
+		.col:nth-of-type(2n) {
+		    background-color: #95cbcb;
+		}
+		.col {
+		    height: 4em;
+		    vertical-align: middle;
+		    line-height: 4em;
+		    background-color: teal;
+		    text-align: center;
+		}
+		@media (min-width: 30em) {
+		    .row { width: 100%; display: table; table-layout: fixed; }
+		    .col { display: table-cell; }
+		}
+		.col {
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+		.col.auto {
+			overflow: auto;
+		}
+		.per-20 {
+			width: 20%;
+		}
+		.per-10 {
+			width: 10%;
+		}
+		.per-30 {
+			width: 30%;
+		}
+		.w-200 {
+			width: 200px;
+		}
+	</style>
+</head>
+<body>
+	<p>最简单的响应式表格布局</p>
+	<p><a href="http://chrisnager.com/ungrid/">官方网址</a></p>
+	<p>利用的原理就是table-layout：fixed</p>
+	<code>
+		<pre>
+			@media (min-width: 30em) {
+			    .row { width: 100%; display: table; table-layout: fixed; }
+			    .col { display: table-cell; }
+			}
+		</pre>
+	</code>
+	<p>css代码也奉上</p>
+	<code>
+		<pre>
+			.col:nth-of-type(2n) {
+			    background-color: #95cbcb;
+			}
+			.col {
+			    height: 4em;
+			    vertical-align: middle;
+			    line-height: 4em;
+			    background-color: teal;
+			    text-align: center;
+			}
+		</pre>
+	</code>
+	<p>30em就是 30*16=480px 也就是当小于480px的时候 就恢复了div本身的状态</p>
+	<p>来看demo</p>
+	<p>1.来看一个默认的例子</p>
+	<div class="wrapper">
+		<div class="row">
+			<div class="col">⚜</div>
+			<div class="col">⚜</div>
+		</div>
+	</div>
+	<p>可以看出，默认就是平均分配，再看一个3个的例子</p>
+	<div class="wrapper">
+		<div class="row">
+			<div class="col">⚜</div>
+			<div class="col">⚜</div>
+			<div class="col">⚜</div>
+		</div>
+	</div>
+	<p>5个再试试</p>
+	<div class="wrapper">
+		<div class="row">
+			<div class="col">⚜</div>
+			<div class="col">⚜</div>
+			<div class="col">⚜</div>
+			<div class="col">⚜</div>
+			<div class="col">⚜</div>
+		</div>
+	</div>
+	<p>需要定制化？来看下官方是这么说的</p>
+	<span>Need specific column widths?</span>
+	<p>Go for it. Both fixed and percentage base widths work perfectly. You can even use them together. The remaining columns will take up the rest of the available space.</p>
+	<p>固定宽度和百分比都是很表现都很完美，甚至可以混搭，剩下的列宽会填充剩余的部分（这真是完美，就是我们想要的）</p>
+	<p>2.百分比搭配</p>
+	<div class="wrapper">
+		<div class="row">
+			<div class="col per-20">⚜20%</div>
+			<div class="col">⚜</div>
+		</div>
+	</div>
+	<p>只需要制定一个百分比即可</p>
+	<p>3.夹心百分比</p>
+	<div class="wrapper">
+		<div class="row">
+			<div class="col per-20">⚜20%</div>
+			<div class="col">⚜</div>
+			<div class="col per-30">⚜30%</div>
+		</div>
+	</div>
+	<p>4.前定宽200px（做侧边栏定款，右边自适应， 两栏布局新姿势）</p>
+	<div class="wrapper">
+		<div class="row">
+			<div class="col w-200">⚜200px</div>
+			<div class="col">⚜</div>
+		</div>
+	</div>
+	<p>5.前定宽200px,如果剩余多个就平均分</p>
+	<div class="wrapper">
+		<div class="row">
+			<div class="col w-200">⚜200px</div>
+			<div class="col">⚜</div>
+			<div class="col">⚜</div>
+		</div>
+	</div>
+	<p>6.前后定宽200px（前后定宽， 中间自适应，三栏布局轻松松）</p>
+	<div class="wrapper">
+		<div class="row">
+			<div class="col w-200">⚜200px</div>
+			<div class="col">⚜</div>
+			<div class="col w-200">⚜200px</div>
+		</div>
+	</div>
+	<p>7.百分比定宽freestyle（我就是freestyle）</p>
+	<div class="row">
+		<div class="col per-20">⚜20%</div>
+		<div class="col">⚜</div>
+		<div class="col w-200">⚜200px</div>
+		<div class="col per-10">⚜10%</div>
+	</div>
+	<p>7.加上缺省text-overflow（缺省玩弄股掌中）</p>
+	<div class="row">
+		<div class="col per-20">⚜20%aaaaaaaaaaa</div>
+		<div class="col">⚜<˜∆˜∆˚˜˚∆˜∆˚∫©¨¥†¥†∂†</div>
+		<div class="col w-200">⚜200pxbbbbbbbbbbbbbbbbbbbb</div>
+		<div class="col per-10">⚜10%ccccccccccccccccccccccccccc</div>
+	</div>
+	<p>8.插入代码都不是问题</p>
+	<div class="row">
+		<div class="col per-20">⚜20%aaaaaaaaaaa</div>
+		<div class="col auto">
+			<code>
+				<pre>
+					@media (min-width: 30em) {
+					    .row { width: 100%; display: table; table-layout: fixed; }
+					    .col { display: table-cell; }
+					}
+				</pre>
+			</code>
+		</div>
+		<div class="col w-200">⚜200pxbbbbbbbbbbbbbbbbbbbb</div>
+		<div class="col per-10">⚜10%ccccccccccccccccccccccccccc</div>
+	</div>
+	<p>总结真是太灵活了！！！！</p>
+</body>
+</html>
