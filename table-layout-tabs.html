@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>tabs</title>
+	<style type="text/css">
+		/**
+		 * Tabs object.
+		 *
+		 * 1. Tables (kinda) for layout!
+		 * 2. This is the magic bit; make all children occupy equal width.
+		 * 3. Required to make the tabs fill their container.
+		 * 4. Make each tab pack up horizontally.
+		 * 5. Ensure the hit area covers the whole tab.
+		 */
+		 .wrapper {
+		 	width: 500px;
+		 	padding: 2em;
+		 	border: 1px solid #eee;
+		 }
+		.tabs {
+			display: table;
+			width: 100%;
+			table-layout: fixed;
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		.tabs__item {
+			display: table-cell;
+		}
+		.tabs__link {
+			display: block;
+		}
+			
+		.primary-nav {
+		    text-align: center;
+		    border-radius: 4px;
+		    overflow: hidden; /* [1] */
+		}
+
+		.primary-nav a {
+			padding: 1em;
+			background-color: #BADA55;
+      color: #fff;
+      font-weight: bold;
+      text-decoration: none;
+		}
+
+		.primary-nav a:hover {
+      background-color: #A3C43B;
+    }
+
+    #changeWidth, #addLabel {
+    	margin-left: 20px;
+    }
+	</style>
+</head>
+<body>
+	<p>可以实现tab的平均分配且动态调整</p>
+	<p>Seems like the majority of usage is “makes arbitrary number of cells equal width”, which is awesome, but it does more than that.</p>
+	<p>做常用的就是不确定列平均分配，很神奇，但能做的不止于此</p>
+	<ul>
+		<li>1.随着总宽度调整</li>
+		<li>2.随着item数量调整</li>
+	</ul>
+	<p>wrapper的总宽度为【<span class='widthShow'>300</span>px】</p>
+	<div class='wrapper'>
+		<ul class="tabs  primary-nav">
+		    <li class="tabs__item">
+		        <a href="#" class="tabs__link">Home</a>
+		    </li>
+		    <li class="tabs__item">
+		        <a href="#" class="tabs__link">About</a>
+		    </li>
+		    <li class="tabs__item">
+		        <a href="#" class="tabs__link">Work</a>
+		    </li>
+		    <li class="tabs__item">
+		        <a href="#" class="tabs__link">Contact</a>
+		    </li>
+		</ul>
+	</div>
+	<p>
+		<button id='changeIt'>改变宽度为</button><input type="" name="" id='changeWidth'> px
+		<button id='dynamicAdd'>动态增加</button><input type="" name="" id='addLabel'>
+	</p>
+	
+</body>
+<script type="text/javascript">
+	var wrapper = document.querySelector('.wrapper');
+	var widthShow = document.querySelector('.widthShow');
+	var change = document.getElementById('changeIt');
+	var width = document.getElementById('changeWidth');
+	var dynamicAdd = document.getElementById('dynamicAdd');
+	var addLabel = document.getElementById('addLabel');
+	var tabs = document.querySelector('.tabs');
+	var addFunc = function(item) {
+		return `
+				<li class="tabs__item">
+		        <a href="#" class="tabs__link">${item}</a>
+		    </li>
+		`
+	}
+	change.addEventListener('click', function(event){
+		wrapper.style.width = width.value + 'px'
+		widthShow.innerText = width.value
+	}, false)
+	dynamicAdd.addEventListener('click', function(event){
+		if (addLabel.value) {
+			var html = addFunc(addLabel.value)
+			var parser = new DOMParser()
+			htmlDoc = parser.parseFromString(html, 'text/html')
+			console.log(htmlDoc.querySelector('body').firstChild)
+			tabs.appendChild(htmlDoc.querySelector('body').firstChild)
+		}
+		
+	}, false)
+</script>
+</html>
